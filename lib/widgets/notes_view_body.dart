@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:note_app/widgets/custom_app_bar.dart';
+import 'package:note_app/widgets/custom_listview.dart';
 
 class NotesViewBody extends StatelessWidget {
   const NotesViewBody({super.key});
@@ -17,38 +18,7 @@ class NotesViewBody extends StatelessWidget {
             height: 50,
           ),
           CustomAppBar(),
-        ],
-      ),
-    );
-  }
-}
-
-class NoteItem extends StatelessWidget {
-  const NoteItem({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.amber,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(
-        children: [
-          ListTile(
-            title: const Text(
-              "Flutter Tips",
-            ),
-            subtitle: const Text(
-              "bulid your career with that",
-            ),
-            trailing: IconButton(
-              icon: const Icon(
-                Icons.delete,
-              ),
-              onPressed: (){},
-            ),
-          ),
+          Expanded(child: NotesListView())
         ],
       ),
     );
