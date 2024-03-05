@@ -2,8 +2,10 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note_app/constants/colors.dart';
 import 'package:note_app/cubits/add_note_cubit/cubit/notes_cubit_cubit.dart';
 import 'package:note_app/models/note_model.dart';
+import 'package:note_app/widgets/custom_add_note_form_state.dart';
 import 'package:note_app/widgets/custom_app_bar.dart';
 import 'package:note_app/widgets/custom_text_filed.dart';
 
@@ -54,7 +56,52 @@ class _EditNoteViewBodyState extends State<EditNoteViewBody> {
           hint: widget.note.subTitle,
           maxLines: 5,
         ),
+        EditColorsList(
+          note: widget.note,
+        ),
       ]),
+    );
+  }
+}
+
+class EditColorsList extends StatefulWidget {
+  const EditColorsList({super.key, required this.note});
+  final NoteModel note;
+
+  @override
+  State<EditColorsList> createState() => _EditColorsListState();
+}
+
+class _EditColorsListState extends State<EditColorsList> {
+  late int currentIndex;
+  @override
+  void initState() {
+    currentIndex = Kcolors.indexOf(Color(widget.note.color));
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 38 * 2,
+      child: ListView.builder(
+        itemCount: Kcolors.length,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) => Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 6),
+          child: GestureDetector(
+            onTap: () {
+              currentIndex = index;
+              widget.note.color = Kcolors[index].value;
+              setState(() {});
+            },
+            child: ColorItem(
+              isSelected: currentIndex == index,
+              color: Kcolors[index],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
